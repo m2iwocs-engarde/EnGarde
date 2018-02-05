@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">EnGarde</string>
     <string name="boutonJouer">Jouer</string>
+    <string name="boutonQuitter">Quitter</string>
+    <string name="bluetoothStatus">"Checking ... \n"</string>
 </resources>
