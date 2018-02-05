@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EnGarde</string>
+    <string name="boutonJouer">Jouer</string>
 </resources>
