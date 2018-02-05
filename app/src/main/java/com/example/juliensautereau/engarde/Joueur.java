@@ -10,11 +10,14 @@ public class Joueur {
     private int position;
     private ArrayList<Integer> cartes;
 
-    public Joueur(Boolean statut, Boolean sens, int score, int position) {
+    public Joueur(Boolean statut, Boolean sens) {
         this.statut = statut;
         this.sens = sens;
-        this.score = score;
-        this.position = position;
+        this.score = 0;
+        if(sens)
+            this.position = 1;
+        else
+            this.position = 23;
         this.cartes = new ArrayList<Integer>();
     }
 
@@ -65,6 +68,14 @@ public class Joueur {
     public void addCartes(Integer carte) {
         this.cartes.add(carte);
     }
+
+    @Override
+    public String toString(){
+        String ret = "J:" + this.statut + ";" + this.sens;
+
+        for(int c : this.cartes){
+            ret += ";" + c;
+        }
+        return ret;
+    }
 }
-
-
