@@ -10,12 +10,12 @@ public class Joueur {
     private int position;
     private ArrayList<Integer> cartes;
 
-    public Joueur(Boolean statut, Boolean sens, int score, int position, ArrayList<Integer> cartes) {
+    public Joueur(Boolean statut, Boolean sens, int score, int position) {
         this.statut = statut;
         this.sens = sens;
         this.score = score;
         this.position = position;
-        this.cartes = cartes;
+        this.cartes = new ArrayList<Integer>();
     }
 
     public Boolean getSens() {
@@ -60,6 +60,10 @@ public class Joueur {
 
     public void removeCartes(Integer carte) {
         this.cartes.remove(this.cartes.indexOf(carte));
+    }
+
+    public void addCartes(Integer carte) {
+        this.cartes.add(carte);
     }
 }
 

@@ -34,19 +34,11 @@ public class Jeu extends AppCompatActivity{
     }
 
     public void creerJoueur(){
-        ArrayList<Integer> tmp = new ArrayList<Integer>();
-        for(int i = 0 ; i < 5 ; i++){
-            tmp.add(pioche.get(0));
-            pioche.remove(0);
-        }
-        j1 = new Joueur(true,true,0,1,tmp);
-        tmp.clear();
+        j1 = new Joueur(true,true,0,1);
+        pioche(j1);
 
-        for(int i = 0 ; i < 5 ; i++){
-            tmp.add(pioche.get(0));
-            pioche.remove(0);
-        }
-        j2 = new Joueur(false,false, 0,23,tmp);
+        j2 = new Joueur(false,false, 0,23);
+        pioche(j2);
     }
 
     public Boolean avancer(Integer carte){
@@ -68,10 +60,69 @@ public class Jeu extends AppCompatActivity{
         attaquant.removeCartes(carte);
         defausseLast = carte;
 
-        //fin du tour + envoi position
+        //fin du tour + envoi position + pioche
 
         return true;
 
+    }
+
+    public Boolean reculer(Integer carte){
+        if(attaquant.getSens()){
+            if(attaquant.getPosition() - carte < 1){
+                //on sort du plateau
+                return false; //interdiction de reculer et de jouer la carte, il faut en choisir une autre
+            }
+            attaquant.setPosition(attaquant.getPosition() - carte);//coup valide
+
+        }else{
+            if(attaquant.getPosition() + carte > 23){
+                //on sort du plateau
+                return false; //interdiction de reculer et de jouer la carte, il faut en choisir une autre
+            }
+            attaquant.setPosition(attaquant.getPosition() + carte);//coup valide
+        }
+
+        attaquant.removeCartes(carte);
+        defausseLast = carte;
+
+        //fin du tour + envoi position + pioche
+
+        return true;
+
+    }
+
+    public Boolean attaquer(ArrayList<Integer> cartes){
+        for(int i = 1 ; i < cartes.size() ; i++){
+            if(cartes.get(0) != cartes.get(i)){
+                //cartes differentes
+                return false;//interdiction d'attaquer et de jouer les cartes, il faut en choisir d'autres
+            }
+        }
+
+        if(Math.abs(attaquant.getPosition() - defenseur.getPosition())  !=  cartes.get(0)){
+            //pas la bonne distance
+            return false; //interdiction d'attaquer, il faut en choisir d'autres
+        }
+
+        //fin du tour + envoi une attaque + pioche
+
+        return true;
+    }
+
+    public Boolean pioche(Joueur j){
+
+        int nbCarte = (5 - j.getCartes().size());
+
+        if(pioche.size() - nbCarte <= 0){
+            return false; //plus de carte, fin du jeu
+        }
+
+        for(int i = 0; i < nbCarte ; i ++){
+            j.addCartes(pioche.get(0));
+            pioche.remove(0);
+        }
+
+        return true;
     }
 
 
