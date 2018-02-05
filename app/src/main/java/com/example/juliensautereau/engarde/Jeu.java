@@ -10,8 +10,8 @@ public class Jeu extends AppCompatActivity{
     Integer defausseLast = 0;
     Joueur j1;
     Joueur j2;
-    Joueur attaquant;
-    Joueur defenseur;
+    Joueur actif;
+    Joueur inactif;
 
     public void initialisation(){
         initPioche();
@@ -42,47 +42,48 @@ public class Jeu extends AppCompatActivity{
     }
 
     public Boolean avancer(Integer carte){
-        if(attaquant.getSens()){
-            if(attaquant.getPosition() + carte >= defenseur.getPosition()){
+        if(actif.getSens()){
+            if(actif.getPosition() + carte >= inactif.getPosition()){
                 //on depasse l'adversaire ou meme case
                 return false; //interdiction d'avancer et de jouer la carte, il faut en choisir une autre
             }
-            attaquant.setPosition(attaquant.getPosition() + carte);//coup valide
+            actif.setPosition(actif.getPosition() + carte);//coup valide
 
         }else{
-            if(attaquant.getPosition() - carte >= defenseur.getPosition()){
+            if(actif.getPosition() - carte >= inactif.getPosition()){
                 //on depasse l'adversaire ou meme case
                 return false; //interdiction d'avancer et de jouer la carte, il faut en choisir une autre
             }
-            attaquant.setPosition(attaquant.getPosition() - carte);//coup valide
+            actif.setPosition(actif.getPosition() - carte);//coup valide
         }
 
-        attaquant.removeCartes(carte);
+        actif.removeCartes(carte);
         defausseLast = carte;
 
         //fin du tour + envoi position + pioche
+        //possibilite de faire attaque indirect (attque direct)
 
         return true;
 
     }
 
     public Boolean reculer(Integer carte){
-        if(attaquant.getSens()){
-            if(attaquant.getPosition() - carte < 1){
+        if(actif.getSens()){
+            if(actif.getPosition() - carte < 1){
                 //on sort du plateau
                 return false; //interdiction de reculer et de jouer la carte, il faut en choisir une autre
             }
-            attaquant.setPosition(attaquant.getPosition() - carte);//coup valide
+            actif.setPosition(actif.getPosition() - carte);//coup valide
 
         }else{
-            if(attaquant.getPosition() + carte > 23){
+            if(actif.getPosition() + carte > 23){
                 //on sort du plateau
                 return false; //interdiction de reculer et de jouer la carte, il faut en choisir une autre
             }
-            attaquant.setPosition(attaquant.getPosition() + carte);//coup valide
+            actif.setPosition(actif.getPosition() + carte);//coup valide
         }
 
-        attaquant.removeCartes(carte);
+        actif.removeCartes(carte);
         defausseLast = carte;
 
         //fin du tour + envoi position + pioche
@@ -99,7 +100,7 @@ public class Jeu extends AppCompatActivity{
             }
         }
 
-        if(Math.abs(attaquant.getPosition() - defenseur.getPosition())  !=  cartes.get(0)){
+        if(Math.abs(actif.getPosition() - inactif.getPosition())  !=  cartes.get(0)){
             //pas la bonne distance
             return false; //interdiction d'attaquer, il faut en choisir d'autres
         }
@@ -108,6 +109,8 @@ public class Jeu extends AppCompatActivity{
 
         return true;
     }
+
+
 
     public Boolean pioche(Joueur j){
 
@@ -123,6 +126,26 @@ public class Jeu extends AppCompatActivity{
         }
 
         return true;
+    }
+
+    public Boolean parade(int valeur, int nombre){
+        int nb = 0;
+        for(int c : actif.getCartes()){
+            if(c == valeur){
+                nb++;
+            }
+        }
+
+        if (nb >= nombre) {
+            //parade a reussi
+            for(int i = 0; i < nombre ; i ++){
+                actif.removeCartes(valeur);
+            }
+            return true;
+        }else{
+            //defaite du joueur
+            return false;
+        }
     }
 
 
