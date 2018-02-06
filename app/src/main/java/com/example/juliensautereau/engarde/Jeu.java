@@ -13,9 +13,9 @@ public class Jeu extends AppCompatActivity{
     Joueur j2;
     Joueur actif;
     Joueur inactif;
-
     ArrayList<String> messages = new ArrayList<String>();
 
+    /*-----------------Time Line -------------------------------------------------------*/
     public void Jeu(){
         if(serveur){
             //j1
@@ -70,28 +70,32 @@ public class Jeu extends AppCompatActivity{
                     actif = j1;
                     inactif = j2;
 
-                    tourInactif(); //Mise a jour des actions de j1
+                    tourInactif(); //Mise a jour des actions de j1 TODO
                 }
             }
 
         }
     }
 
+    /*-----------------------------------------------------------------------------------------------*/
+
+    /*-----------------------Début du tour--------------------------------------------------------------*/
     public void tourInactif(){
 
     }
 
+    //Début du tour, verification que le joueur peut faire une action
     public void tourActif(){
-
         boolean parrade,reculer;
 
-        reculer = peutReculer;
+        parrade = peutParrer; //verification que le joueur peut parrer
 
-        if(attaquerIndirect){
+        if(attaquerIndirect){ //si le joueur vient d'etre attaque indirectement
             //TODO Afficher bouton griser Reculer et Parrer
+            reculer = peutReculer;//vérification que le joueur peut reculer
 
-            parrade = peutParrer;
 
+            //on ne degrise que les actions possibles
             if(reculer){
                 //Dégriser bouton reculer
             }
@@ -99,27 +103,24 @@ public class Jeu extends AppCompatActivity{
                 //Dégriser bouton reculer
             }
 
-            if(!reculer && !parrade){
+            if(!reculer && !parrade){//le joueur ne peut rien faire il a perdu
                 //Perdu
             }
         }
 
 
-        if(attaquer) {
-            parrade = peutParrer();
-
+        if(attaquer) {//si le joueur vient d'etre attaque directement
             if(parrade) {
                 //Parade
-            }else{
+            }else{ //le joueur ne peut pas parer il a perdu
                 //Perdu
             }
         }
 
         /// FIN P1
-
-
     }
 
+    //debut du tour d'attaque, verification que le joueur peut faire une action
     public void tourAttaque(){
         boolean attaquer,avancer,reculer;
 
@@ -147,6 +148,7 @@ public class Jeu extends AppCompatActivity{
     }
 
     public void finTour(){
+        String[] msg = null;
         for(String s : msg) { //TODO Syncro
 
         }
