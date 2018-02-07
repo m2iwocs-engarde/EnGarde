@@ -26,6 +26,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/scrollView"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,6 +53,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.578"
@@ -78,7 +80,7 @@
     <Button
         android:id="@+id/attaque1"
         android:layout_width="71dp"
-        android:layout_height="27dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -95,7 +97,7 @@
     <Button
         android:id="@+id/attaque2"
         android:layout_width="71dp"
-        android:layout_height="27dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -123,7 +125,7 @@
         app:layout_constraintHorizontal_bias="0.015"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.624" />
+        app:layout_constraintVertical_bias="0.611" />
 
     <Button
         android:id="@+id/attaque4"
@@ -140,12 +142,12 @@
         app:layout_constraintHorizontal_bias="0.015"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.767" />
+        app:layout_constraintVertical_bias="0.732" />
 
     <Button
         android:id="@+id/defense1"
         android:layout_width="71dp"
-        android:layout_height="27dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -162,7 +164,7 @@
     <Button
         android:id="@+id/defense2"
         android:layout_width="71dp"
-        android:layout_height="27dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -184,6 +186,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="#a37f42"
+        android:textOn="1"
+        android:textOff=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.244"
@@ -199,6 +204,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="#a37f42"
+        android:textOn="3"
+        android:textOff=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.427"
@@ -214,6 +222,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="#a37f42"
+        android:textOn="3"
+        android:textOff=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.609"
@@ -229,6 +240,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="#a37f42"
+        android:textOn="5"
+        android:textOff=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.792"
@@ -244,6 +258,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="#a37f42"
+        android:textOn="5"
+        android:textOff=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.975"
@@ -290,118 +307,119 @@
                 <RadioButton
                     android:id="@+id/r1"
                     android:background="#ffd796"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r2"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r3"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r4"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r5"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r6"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r7"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r8"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r9"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r10"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r11"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r12"
-                    android:enabled="false"
-                    android:background="#ffa617" />
+                    android:background="#ffa617"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r13"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r14"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r15"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r16"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r17"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r18"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r19"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r20"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r21"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r22"
-                    android:enabled="false"
-                    android:background="#ffd796" />
+                    android:background="#ffd796"
+                    android:enabled="false" />
 
                 <RadioButton
                     android:id="@+id/r23"
-                    android:enabled="false"
                     android:background="#ffd796"
-                    android:checked="true" />
+                    android:checked="true"
+                    android:enabled="false" />
             </TableRow>
         </TableLayout>
     </HorizontalScrollView>
