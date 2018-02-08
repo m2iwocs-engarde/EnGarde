@@ -64,6 +64,8 @@ public class DeviceListActivity extends Activity {
      */
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
 
+    public static boolean serveur = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,6 +182,8 @@ public class DeviceListActivity extends Activity {
 
             // Set result and finish this Activity
             setResult(Activity.RESULT_OK, intent);
+
+            serveur = true;
             finish();
         }
     };
