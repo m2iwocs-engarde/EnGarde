@@ -666,11 +666,11 @@ public class Jeu extends AppCompatActivity{
 
     //TODO A supp tmp
     public void sendData(String s){
-
+        fragment.sendMessage(s);
     }
 
     public String receiveData(){
-        return "Coucou";
+        return fragment.receiveData();
     }
 
     private BluetoothChatFragment fragment;
@@ -680,7 +680,7 @@ public class Jeu extends AppCompatActivity{
         setContentView(R.layout.activity_game);
         // setContentView(new CustomView(this));
 
-        fragment = new BluetoothChatFragment();
+        fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
         startGame();
     }
 
