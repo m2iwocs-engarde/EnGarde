@@ -17,72 +17,118 @@ public class Jeu extends AppCompatActivity{
     Joueur inactif;
     ArrayList<String> messages = new ArrayList<String>();
 
+    boolean game = true;
+    boolean breakInactif = false;
+
+    boolean attaquer = false;
+    boolean attaquerIndirect = false;
+
+    ArrayList<Integer> attCartes = new ArrayList<Integer>();
+
+    boolean serveur; //TODO
+
     /*-----------------Time Line -------------------------------------------------------*/
     public void Jeu(){
+
         if(serveur){
             //j1
             initialisation();
-            sendData(j2.toString());
-            String brut = receiveData(); //TODO
-            sendData(j1.toString());
-            String brut2 = receiveData(); //TODO
+            sendData("J2:" + j2.toString());
+            String brut = receiveData();
+            test(parse(brut));
 
-            if(j1.getStatut()){
-                tour();
+            sendData("J1:" + j1.toString());
+            brut = receiveData();
+            test(parse(brut));
+
+            if (j1.getStatut()) {
+
+                actif = j1;
+                inactif = j2;
+
+                tourActif();
+            }else{
+
+                actif = j2;
+                inactif = j1;
+
+                tourInactif();
             }
 
         }else{
             //j2
             String brut = receiveData();
-            ArrayList<String> msg = parse(brut);
-            if(msg.get(0).equals("J")){
-                j2 = new Joueur(Boolean.parseBoolean(msg.get(1)),Boolean.parseBoolean(msg.get(2)));
-                for(int i=3; i< msg.size();i++){
-                    j2.addCartes(Integer.parseInt(msg.get(i)));
-                }
+            test(parse(brut));
+
+            sendData("OK:");
+
+            brut = receiveData();
+            test(parse(brut));
+
+            sendData("OK:");
+
+            if (j2.getStatut()) {
+
+                actif = j2;
+                inactif = j1;
+
+                tourActif(); //Tour de j2 + envoie des info Inactif
+
             }else{
-                //TODO ERROR
-                Toast.makeText(this,"Echec de l'initialisation J2",Toast.LENGTH_SHORT).show();
 
-            }
+                actif = j1;
+                inactif = j2;
 
-            sendData("O:1");
-
-            //j1
-            String brut2 = receiveData();
-            ArrayList<String> msg2 = parse(brut2);
-            if(msg.get(0).equals("J")){
-                j1 = new Joueur(Boolean.parseBoolean(msg2.get(1)),Boolean.parseBoolean(msg2.get(2)));
-            }else{
-                //TODO ERROR
-                Toast.makeText(this,"Echec de l'initialisation J1",Toast.LENGTH_SHORT).show();
-            }
-
-            sendData("O:2");
-
-
-            while(game) {
-                if (j2.getStatut()) {
-                    sendData("T:2");
-                    actif = j2;
-                    inactif = j1;
-                    tourActif(); //Tour de j2 + envoie des info Inactif
-                }else{
-                    String brut3 = receiveData(); //TODO Verif Syncro
-
-                    actif = j1;
-                    inactif = j2;
-
-                    tourInactif(); //Mise a jour des actions de j1 TODO
-                }
+                tourInactif(); //Mise a jour des actions de j1 TODO
             }
 
         }
     }
 
+    public void newTurn(){
+        j1.invStatut();
+        j2.invStatut();
+
+        if(serveur){
+            if (j1.getStatut()) {
+
+                actif = j1;
+                inactif = j2;
+
+                tourActif();
+            }else{
+                sendData("T:2");
+
+                actif = j2;
+                inactif = j1;
+
+                tourInactif();
+            }
+        }else{
+            if (j2.getStatut()) {
+
+                actif = j2;
+                inactif = j1;
+
+                tourActif();
+
+            }else{
+                sendData("T:1");
+
+                actif = j1;
+                inactif = j2;
+
+                tourInactif();
+            }
+        }
+    }
+
     public ArrayList<String> parse(String message){
         String[] original = message.split(":");
-        String[] contenu = original[1].split(";");
+        String[] contenu = null;
+        if(original.length > 1){
+            contenu = original[1].split(";");
+        }
 
         ArrayList<String> messageArray = new ArrayList<String>();
 
@@ -98,35 +144,73 @@ public class Jeu extends AppCompatActivity{
 
         switch(msg.get(0)){
             case "D" : // Mise a jour de la pile de défausse
-                defausseLast = Integer.parseInt(msg.get(1));
+                    defausseLast = Integer.parseInt(msg.get(1));
+                    sendData("OK:"); //TODO Verif Syncro
                 break;
 
             case "P" : // Joueur 2 demmande a piocher
-                String ret = "PR:";
-                for(Integer i : pioche(j2)){
-                    ret += i + ";";
-                }
+                    String ret = "PR:";
+                    for(Integer i : pioche(j2)){
+                        ret += i + ";";
+                    }
 
-                ret = ret.substring(0,ret.length()-1);
-                sendData(ret);
+                    ret = ret.substring(0,ret.length()-1);
+                    sendData(ret);
 
-                String brut = receiveData(); //TODO Verif Syncro 01
-                sendData("PN:" + pioche.size());
-                break;
-            case "PN" : // Mise a jour de la taille de la pioche
-                this.taillePioche = Integer.parseInt(msg.get(1));
+                    String brut = receiveData(); //TODO Verif Syncro
+
                 break;
             case "PR" : // J2 recoit ses cartes
-                for(int i=1; i<msg.size();i++) {
-                    j2.addCartes(Integer.parseInt(msg.get(i)));
-                }
-                sendData("OK"); //TODO Verif Syncro 01
+                    int nbCarte = 0;
+                    for(int i=1; i<msg.size();i++) {
+                        nbCarte++;
+                        j2.addCartes(Integer.parseInt(msg.get(i)));
+                    }
+                    this.taillePioche = this.taillePioche - nbCarte;
+                    sendData("OK:"); //TODO Verif Syncro
                 break;
 
             case "PA" : //Affiche le message :"Le coup a été parrer"
-                //TODO
+                    //TODO
+                    sendData("OK:"); //TODO Verif Syncro
                 break;
+            case "PN" : // Mise a jour de la taille de la pioche
+                    this.taillePioche = Integer.parseInt(msg.get(1));
+                break;
+            case "OK" :
+                break;
+            case "J1" :
+                    j1 = new Joueur(Boolean.parseBoolean(msg.get(1)),Boolean.parseBoolean(msg.get(2)));
+                break;
+            case "J2" :
+                    ArrayList<Integer> cartes = new ArrayList<Integer>();
 
+                    for(int i=2; i < msg.size(); i++){
+                        cartes.add(Integer.parseInt(msg.get(i)));
+                    }
+
+                    j2 = new Joueur(Boolean.parseBoolean(msg.get(1)),Boolean.parseBoolean(msg.get(2)),cartes);
+                break;
+            case "T":
+                    if(serveur && Integer.parseInt(msg.get(0)) == 1) this.breakInactif = true;
+                    if(!serveur && Integer.parseInt(msg.get(0)) == 2) this.breakInactif = true;
+                break;
+            case "AD":
+                    this.attaquer = true;
+                    this.attCartes.clear();
+
+                    for(int i=0; i<msg.size(); i++){
+                        this.attCartes.add(Integer.parseInt(msg.get(i)));
+                    }
+                break;
+            case "AI":
+                    this.attaquerIndirect = true;
+                    this.attCartes.clear();
+
+                    for(int i=0; i<msg.size(); i++){
+                        this.attCartes.add(Integer.parseInt(msg.get(i)));
+                    }
+                break;
         }
     }
 
@@ -134,19 +218,25 @@ public class Jeu extends AppCompatActivity{
 
     /*-----------------------Début du tour--------------------------------------------------------------*/
     public void tourInactif(){
-
+        while(!breakInactif){
+            String brut = receiveData(); //TODO Verif Syncro
+            test(parse(brut));
+        }
+        this.breakInactif = false;
     }
 
     //Début du tour, verification que le joueur peut faire une action
     public void tourActif(){
         boolean parrade,reculer;
 
-        parrade = peutParrer(cartes); //verification que le joueur peut parrer
-
         if(attaquerIndirect){ //si le joueur vient d'etre attaque indirectement
             //TODO Afficher bouton griser Reculer et Parrer
+
+            this.attaquerIndirect = false;
+
             reculer = peutReculer();//vérification que le joueur peut reculer
 
+            parrade = peutParrer(attCartes); //verification que le joueur peut parrer
 
             //on ne degrise que les actions possibles
             if(reculer){
@@ -163,6 +253,11 @@ public class Jeu extends AppCompatActivity{
 
 
         if(attaquer) {//si le joueur vient d'etre attaque directement
+
+            this.attaquer = false;
+
+            parrade = peutParrer(attCartes); //verification que le joueur peut parrer
+
             if(parrade) {
                 //Parade
             }else{ //le joueur ne peut pas parer il a perdu
@@ -170,7 +265,11 @@ public class Jeu extends AppCompatActivity{
             }
         }
 
-        /// FIN P1
+        if(!attaquer && !attaquerIndirect){
+            tourAttaque();
+        }
+
+
     }
 
     //debut du tour d'attaque, verification que le joueur peut faire une action
@@ -193,19 +292,42 @@ public class Jeu extends AppCompatActivity{
             //Dégriser bouton reculer
         }
 
-
         if(!attaquer && !avancer && !reculer){//si aucune action possible, le joeuur a perdu
             //Perdu
         }
+    }
 
+    public void tourAttaqueIndirect(){
+        boolean a = peutAttaquerIndirectement();
+        if(a){
+            //Dégriser bouton attaquer indirectement
+        }
+
+        //Dégriser bouton parrer
     }
 
     public void finTour(){
-        String[] msg = null;
-        for(String s : msg) { //TODO Syncro
 
+        String[] msg = null;
+
+        for(String s : msg) { //TODO Syncro
+            sendData(msg);
+            String brut = receiveData(); //TODO Verif Syncro
+            test(parse(brut));
         }
+
+        if(serveur){
+            pioche(j1);
+            sendData("PN:" + this.pioche.size());
+        }else{
+            sendData("P:");
+            String brut = receiveData(); //TODO Verif Syncro
+            test(parse(brut));
+        }
+
+        newTurn();
     }
+
     /*------------------------------------------------------------------------------------------*/
 
     /*---------------------Verification des actions --------------------------------------------*/

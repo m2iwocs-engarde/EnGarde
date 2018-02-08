@@ -21,6 +21,17 @@ public class Joueur {
         this.cartes = new ArrayList<Integer>();
     }
 
+    public Joueur(Boolean statut, Boolean sens, ArrayList<Integer> cartes) {
+        this.statut = statut;
+        this.sens = sens;
+        this.score = 0;
+        if(sens)
+            this.position = 1;
+        else
+            this.position = 23;
+        this.cartes = cartes;
+    }
+
     public Boolean getSens() {
         return sens;
     }
@@ -69,9 +80,11 @@ public class Joueur {
         this.cartes.add(carte);
     }
 
+    public void invStatut() { this.statut = !this.statut; }
+
     @Override
     public String toString(){
-        String ret = "J:" + this.statut + ";" + this.sens;
+        String ret = this.statut + ";" + this.sens;
 
         for(int c : this.cartes){
             ret += ";" + c;
