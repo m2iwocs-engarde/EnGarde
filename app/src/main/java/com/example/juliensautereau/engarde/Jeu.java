@@ -3,7 +3,9 @@ package com.example.juliensautereau.engarde;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,14 @@ public class Jeu extends AppCompatActivity{
     ArrayList<Integer> attCartes = new ArrayList<Integer>();
 
     boolean serveur; //TODO
+
+    //
+
+    ToggleButton c1,c2,c3,c4,c5;
+
+    Button btn_avancer,btn_reculer,btn_attaqueD,btn_attaqueI,btn_parer,btn_retraite;
+
+    Button btn_pioche, btn_defausse;
 
     /*-----------------Time Line -------------------------------------------------------*/
     public void startGame(){
@@ -97,6 +107,8 @@ public class Jeu extends AppCompatActivity{
                 actif = j1;
                 inactif = j2;
 
+                setEnableCard(true);
+
                 tourActif();
             }else{
                 sendData("T:2");
@@ -104,10 +116,14 @@ public class Jeu extends AppCompatActivity{
                 actif = j2;
                 inactif = j1;
 
+                setEnableCard(false);
+
                 tourInactif();
             }
         }else{
             if (j2.getStatut()) {
+
+                setEnableCard(true);
 
                 actif = j2;
                 inactif = j1;
@@ -119,6 +135,8 @@ public class Jeu extends AppCompatActivity{
 
                 actif = j1;
                 inactif = j2;
+
+                setEnableCard(false);
 
                 tourInactif();
             }
@@ -243,9 +261,11 @@ public class Jeu extends AppCompatActivity{
             //on ne degrise que les actions possibles
             if(reculer){
                 //Dégriser bouton reculer
+                btn_retraite.setEnabled(true);
             }
             if(parrade){
                 //Dégriser bouton reculer
+                btn_parer.setEnabled(true);
             }
 
             if(!reculer && !parrade){//le joueur ne peut rien faire il a perdu
@@ -261,7 +281,7 @@ public class Jeu extends AppCompatActivity{
             parrade = peutParrer(attCartes); //verification que le joueur peut parrer
 
             if(parrade) {
-                //Parade
+                btn_parer.setEnabled(true);
             }else{ //le joueur ne peut pas parer il a perdu
                 //Perdu
             }
@@ -282,16 +302,22 @@ public class Jeu extends AppCompatActivity{
         avancer = peutAvancer();//vérification que le joueur peut avancer
         reculer = peutReculer();//vérification que le joueur peut reculer
 
+        btn_parer.setEnabled(false);
+        btn_retraite.setEnabled(false);
+
         //TODO affichage bts
 
         if(attaquer){
             //Dégriser bouton attaquer
+            btn_attaqueD.setEnabled(true);
         }
         if(avancer){
             //Dégriser bouton avancer
+            btn_avancer.setEnabled(true);
         }
         if(reculer){
             //Dégriser bouton reculer
+            btn_reculer.setEnabled(true);
         }
 
         if(!attaquer && !avancer && !reculer){//si aucune action possible, le joeuur a perdu
@@ -301,20 +327,32 @@ public class Jeu extends AppCompatActivity{
 
     public void tourAttaqueIndirect(){
         boolean a = peutAttaquer();
+
+        btn_attaqueD.setEnabled(false);
+        btn_avancer.setEnabled(false);
+        btn_reculer.setEnabled(false);
+
         if(a){
             //Dégriser bouton attaquer indirectement
+            btn_attaqueI.setEnabled(true);
         }
 
-        //Dégriser bouton parrer
+        //TODO Dégriser Fin du tour
     }
 
     public void finTour(){
 
+        btn_attaqueD.setEnabled(false);
+        btn_avancer.setEnabled(false);
+        btn_reculer.setEnabled(false);
+        btn_attaqueI.setEnabled(false);
+        //TODO Griser Fin du tour
+
         String[] msg = null;
 
-        for(String s : msg) { //TODO Syncro
+        for(String s : msg) {
             sendData(s);
-            String brut = receiveData(); //TODO Verif Syncro
+            String brut = receiveData();
             test(parse(brut));
         }
 
@@ -323,7 +361,7 @@ public class Jeu extends AppCompatActivity{
             sendData("PN:" + this.pioche.size());
         }else{
             sendData("P:");
-            String brut = receiveData(); //TODO Verif Syncro
+            String brut = receiveData();
             test(parse(brut));
         }
 
@@ -662,9 +700,17 @@ public class Jeu extends AppCompatActivity{
         }
     }
 
+    public void setEnableCard(boolean b){
+        c1.setEnabled(b);
+        c2.setEnabled(b);
+        c3.setEnabled(b);
+        c4.setEnabled(b);
+        c5.setEnabled(b);
+    }
+
     /////////////////////////
 
-    //TODO A supp tmp
+    //TODO A supp tmp (ou modif)
     public void sendData(String s){
         fragment.sendMessage(s);
     }
@@ -681,6 +727,29 @@ public class Jeu extends AppCompatActivity{
         // setContentView(new CustomView(this));
 
         fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
+
+        // Init
+
+        //TODO a finir
+        c1 = findViewById(R.id.carte1);
+        c2 = findViewById(R.id.carte2);
+        c3 = findViewById(R.id.carte3);
+        c4 = findViewById(R.id.carte4);
+        c5 = findViewById(R.id.carte5);
+
+        btn_avancer = findViewById(R.id.avancer);
+        btn_reculer = findViewById(R.id.reculer);
+        btn_attaqueD = findViewById(R.id.attaqueD);
+        btn_attaqueI = findViewById(R.id.attaqueI);
+        btn_parer = findViewById(R.id.parer);
+        btn_retraite = findViewById(R.id.retraite);
+
+        //TODO a finir
+        btn_defausse = findViewById(R.id.defausse);
+        btn_pioche = findViewById(R.id.pioche);
+
+        // Start
+
         startGame();
     }
 
