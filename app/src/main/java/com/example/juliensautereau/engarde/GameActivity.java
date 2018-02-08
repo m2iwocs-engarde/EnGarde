@@ -9,9 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-//TODO A supp
+import com.example.juliensautereau.engarde.common.activities.SampleActivityBase;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends SampleActivityBase {
 
     /*Canvas c;
     Paint paint = new Paint();

@@ -3,6 +3,8 @@ package com.example.juliensautereau.engarde;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+
+import com.example.juliensautereau.engarde.common.activities.SampleActivityBase;
 import com.example.juliensautereau.engarde.common.logger.LogWrapper;
 import com.example.juliensautereau.engarde.common.logger.Log;
 import com.example.juliensautereau.engarde.common.logger.LogFragment;
@@ -11,33 +13,44 @@ import com.example.juliensautereau.engarde.common.logger.MessageOnlyLogFilter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity {
+import android.os.SystemClock;
+import android.widget.ViewAnimator;
+
+public class MainActivity extends SampleActivityBase {
 
     public static final String TAG = "MainActivity";
 
+    // Whether the Log Fragment is currently shown
+    private boolean mLogShown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        if (savedInstanceState == null) {
+        System.out.println("----------------------------- A"  );
+        if(savedInstanceState == null) {
+            System.out.println("----------------------------- B"  );
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             BluetoothChatFragment fragment = new BluetoothChatFragment();
             transaction.replace(R.id.sample_content_fragment, fragment);
+            System.out.println("----------------------------- C"  );
             transaction.commit();
+            System.out.println("----------------------------- D"  );
         }
-
     }
 
     public void goToCheckActivity(View v) {
 
-        Intent goToCheck = new Intent(this, CheckBluetooth.class);
+        Intent goToCheck = new Intent(this, GameActivity.class);
         startActivity(goToCheck);
     }
 
@@ -47,18 +60,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        System.out.println("----------------------------- E"  );
+
+        getMenuInflater().inflate(R.menu.main, menu);
+        System.out.println("----------------------------- F"  );
+
+        return true;
+    }
+
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         //MenuItem logToggle = menu.findItem(R.id.menu_toggle_log);
         //logToggle.setVisible(findViewById(R.id.sample_output) instanceof ViewAnimator);
         // logToggle.setTitle(mLogShown ? R.string.sample_hide_log : R.string.sample_show_log);
 
         return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
@@ -72,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     output.setDisplayedChild(1);
                 } else {
                     output.setDisplayedChild(0);
-                }
+                }/home/ronan/Téléchargements/android/BluetoothChat/Application/src/main/res/drawable-hdpi
                 supportInvalidateOptionsMenu()
                 return true;
         }*/
@@ -97,6 +114,12 @@ public class MainActivity extends AppCompatActivity {
         msgFilter.setNext(logFragment.getLogView());*/
 
         Log.i(TAG, "Ready");
+    }
+
+    // Permet d'afficher un message
+    public void afficherMessage(String s) {
+
+        Toast.makeText(this, s ,Toast.LENGTH_LONG).show();
     }
 
 }

@@ -14,6 +14,11 @@
   limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+<resources>
 
-</menu>
+    <!-- Semantic definitions -->
+
+    <dimen name="horizontal_page_margin">@dimen/margin_huge</dimen>
+    <dimen name="vertical_page_margin">@dimen/margin_medium</dimen>
+
+</resources>

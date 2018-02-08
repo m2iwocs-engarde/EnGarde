@@ -7,11 +7,13 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.juliensautereau.engarde.common.activities.SampleActivityBase;
+
 import java.util.ArrayList;
 
 //TODO : bouton fin du tour
 
-public class Jeu extends AppCompatActivity{
+public class Jeu extends SampleActivityBase {
     ArrayList<Integer> pioche = new ArrayList<Integer>();
     Integer defausseLast = 0;
     Integer taillePioche = 0;
@@ -723,10 +725,10 @@ public class Jeu extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        //setContentView(R.layout.activity_game);
         // setContentView(new CustomView(this));
 
-        fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
+        /*fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
 
         // Init
 
@@ -750,7 +752,7 @@ public class Jeu extends AppCompatActivity{
 
         // Start
 
-        startGame();
+        startGame();*/
     }
 
 }
