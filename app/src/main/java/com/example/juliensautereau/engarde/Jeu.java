@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 //TODO : bouton fin du tour
 
-public class Jeu extends AppCompatActivity{
+/*public class Jeu extends AppCompatActivity{
     ArrayList<Integer> pioche = new ArrayList<Integer>();
     Integer defausseLast = 0;
     Integer taillePioche = 0;
@@ -18,7 +18,7 @@ public class Jeu extends AppCompatActivity{
     ArrayList<String> messages = new ArrayList<String>();
 
     /*-----------------Time Line -------------------------------------------------------*/
-    public void Jeu(){
+    /*public void Jeu(){
         if(serveur){
             //j1
             initialisation();
@@ -133,7 +133,7 @@ public class Jeu extends AppCompatActivity{
     /*-----------------------------------------------------------------------------------------------*/
 
     /*-----------------------Début du tour--------------------------------------------------------------*/
-    public void tourInactif(){
+   /* public void tourInactif(){
 
     }
 
@@ -210,7 +210,7 @@ public class Jeu extends AppCompatActivity{
 
     /*---------------------Verification des actions --------------------------------------------*/
 
-    public boolean peutParrer(ArrayList<Integer> cartes){
+   /* public boolean peutParrer(ArrayList<Integer> cartes){
         int nb = 0;
         for(int c : actif.getCartes()){
             if(c == cartes.get(0)){
@@ -278,7 +278,7 @@ public class Jeu extends AppCompatActivity{
 
     /* --------------------------------- Deb actionButton ------------------------------------- */
 
-    public void actionButtonParrer(){
+    /*public void actionButtonParrer(){
         if(parade(getCarteSelectioner())){
             String msg = "PA:";
             messages.add(msg);
@@ -379,7 +379,7 @@ public class Jeu extends AppCompatActivity{
     /* -------------- Fin actionButton ---------------------------------------------------------- */
 
     /*---------------  Fonctions ---------------------------------------------------------------- */
-    public ArrayList<Integer> getCarteSelectioner(){
+    /*public ArrayList<Integer> getCarteSelectioner(){
         ArrayList<Integer> ret = new ArrayList<Integer>();
 
         //TODO Récupéré les toogle buttons (numeros de cartes)
@@ -537,5 +537,5 @@ public class Jeu extends AppCompatActivity{
             return false;
         }
     }
-
-}
+*/
+//} 
