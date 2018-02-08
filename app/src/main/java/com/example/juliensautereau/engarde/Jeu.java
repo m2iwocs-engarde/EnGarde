@@ -1,6 +1,8 @@
 package com.example.juliensautereau.engarde;
 
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ public class Jeu extends AppCompatActivity{
     boolean serveur; //TODO
 
     /*-----------------Time Line -------------------------------------------------------*/
-    public void Jeu(){
+    public void startGame(){
 
         if(serveur){
             //j1
@@ -298,7 +300,7 @@ public class Jeu extends AppCompatActivity{
     }
 
     public void tourAttaqueIndirect(){
-        boolean a = peutAttaquerIndirectement();
+        boolean a = peutAttaquer();
         if(a){
             //Dégriser bouton attaquer indirectement
         }
@@ -311,7 +313,7 @@ public class Jeu extends AppCompatActivity{
         String[] msg = null;
 
         for(String s : msg) { //TODO Syncro
-            sendData(msg);
+            sendData(s);
             String brut = receiveData(); //TODO Verif Syncro
             test(parse(brut));
         }
@@ -400,7 +402,7 @@ public class Jeu extends AppCompatActivity{
 
     /* --------------------------------- Deb actionButton ------------------------------------- */
 
-    public void actionButtonParrer(){
+    public void actionButtonParrer(View v){
         if(parade(getCarteSelectioner())){
             String msg = "PA:";
             messages.add(msg);
@@ -412,7 +414,7 @@ public class Jeu extends AppCompatActivity{
 
     }
 
-    public void actionButtonAttaquer(){
+    public void actionButtonAttaquer(View v){
         ArrayList<Integer> carteSelectionée = getCarteSelectioner();
 
         if(attaquer(carteSelectionée)){
@@ -430,7 +432,7 @@ public class Jeu extends AppCompatActivity{
         }
     }
 
-    public void actionButtonAttaquerIndirectement(){
+    public void actionButtonAttaquerIndirectement(View v){
         ArrayList<Integer> carteSelectionée = getCarteSelectioner();
 
         if(attaquer(carteSelectionée)){
@@ -449,7 +451,7 @@ public class Jeu extends AppCompatActivity{
     }
 
 
-    public void actionButtonReculer(){
+    public void actionButtonReculer(View v){
         int nb = -1;
 
         if(getCarteSelectioner().size()>1){
@@ -473,7 +475,7 @@ public class Jeu extends AppCompatActivity{
         }
     }
 
-    public void actionButtonAvancer(){
+    public void actionButtonAvancer(View v){
         int nb = -1;
 
         if(getCarteSelectioner().size()>1){
@@ -658,6 +660,28 @@ public class Jeu extends AppCompatActivity{
             //defaite du joueur
             return false;
         }
+    }
+
+    /////////////////////////
+
+    //TODO A supp tmp
+    public void sendData(String s){
+
+    }
+
+    public String receiveData(){
+        return "Coucou";
+    }
+
+    private BluetoothChatFragment fragment;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
+        // setContentView(new CustomView(this));
+
+        fragment = new BluetoothChatFragment();
+        startGame();
     }
 
 }

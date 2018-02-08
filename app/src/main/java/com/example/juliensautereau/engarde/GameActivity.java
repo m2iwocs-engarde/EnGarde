@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+//TODO A supp
+
 public class GameActivity extends AppCompatActivity {
 
     /*Canvas c;
