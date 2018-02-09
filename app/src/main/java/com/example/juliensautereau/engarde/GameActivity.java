@@ -46,7 +46,7 @@ public class GameActivity extends SampleActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        //setContentView(R.layout.activity_game);
        // setContentView(new CustomView(this));
     }
 }

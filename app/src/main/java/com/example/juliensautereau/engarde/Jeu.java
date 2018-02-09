@@ -725,12 +725,13 @@ public class Jeu extends SampleActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_game);
-        // setContentView(new CustomView(this));
+        setContentView(R.layout.activity_game);
 
         fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
 
-        // Init
+        serveur = DeviceListActivity.serveur;
+        System.out.println("serveur " + serveur);
+                // Init
 
         //TODO a finir
         c1 = findViewById(R.id.carte1);
@@ -753,6 +754,43 @@ public class Jeu extends SampleActivityBase {
         // Start
 
         startGame();
+    }
+
+    public void onPause(){
+        super.onPause();
+    }
+
+    //Rotation de l'ecran
+    protected void onSaveInstanceState (Bundle donnees) {
+        super.onSaveInstanceState(donnees);
+
+       /* donnees.putIntegerArrayList("resultat", reponse);
+        donnees.putIntegerArrayList("jeu", grille);
+        donnees.putLong("chrono", chronometer.getBase());*/
+    }
+
+    protected void onRestoreInstanceState (Bundle donnees) {
+        super.onRestoreInstanceState(donnees);
+
+       /* grille = donnees.getIntegerArrayList("jeu");
+        reponse = donnees.getIntegerArrayList("resultat");
+        temps = donnees.getLong("chrono");*/
+    }
+
+    protected void onResume(){
+        super.onResume();
+
+       /* reponse1.setText("" + reponse.get(0));
+        reponse2.setText("" + reponse.get(1));
+        reponse3.setText("" + reponse.get(2));
+        reponse4.setText("" + reponse.get(3));
+        reponse5.setText("" + reponse.get(4));
+        reponse6.setText("" + reponse.get(5));
+
+        //en cas de rotation on garde le chrono
+        if(temps != 0){
+            chronometer.setBase(temps);
+        }*/
     }
 
 }
