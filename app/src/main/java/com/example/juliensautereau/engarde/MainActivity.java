@@ -57,7 +57,7 @@ public class MainActivity extends SampleActivityBase {
 
     public void goToCheckActivity(View v) {
 
-        Intent goToCheck = new Intent(this, GameActivity.class);
+        Intent goToCheck = new Intent(this, Jeu.class);
         startActivity(goToCheck);
     }
 

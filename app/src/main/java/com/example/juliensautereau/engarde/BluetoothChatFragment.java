@@ -60,7 +60,7 @@ public class BluetoothChatFragment extends Fragment {
     //private EditText mOutEditText;
     private Button mSendButton;
 
-    private static String mess;
+    private static String mess = "";
     private static String verifMess ="";
 
     /**
@@ -102,6 +102,7 @@ public class BluetoothChatFragment extends Fragment {
             Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_LONG).show();
             activity.finish();
         }
+
     }
 
 
@@ -211,8 +212,11 @@ public class BluetoothChatFragment extends Fragment {
      */
     public void sendMessage(String message) {
         // on vérifie si on est encore connecté
+
+        System.out.println("mChatService " + mChatService.getState() + " , BluetoothChatService.STATE_CONNECTED " + BluetoothChatService.STATE_CONNECTED); //TODO DEBUG
         if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
-            Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(), R.string.not_connected, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -220,6 +224,7 @@ public class BluetoothChatFragment extends Fragment {
         if (message.length() > 0) {
             // on le transforme
             byte[] send = message.getBytes();
+            System.out.println("---------- SEND !!! " + send);
             mChatService.write(send); // on l'envoie dans le chat
 
             // on reset le buffer
@@ -310,6 +315,7 @@ public class BluetoothChatFragment extends Fragment {
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
+                    System.out.println("--------- MESS !!!!" + readMessage);
                     mess = readMessage;
                     //mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);//AFFICHAGE MESSAGE ETRANGER TODO
                     break;
@@ -350,6 +356,9 @@ public class BluetoothChatFragment extends Fragment {
             //Toast.makeText(getActivity(), " la valeur de verifMess2 : " + verifMess , Toast.LENGTH_SHORT).show();
             //si on reçoit une info
 
+            //System.out.println("A  " + mess);
+            //System.out.println("B  " + verifMess);
+
             if(!mess.equals(verifMess)){
                 //Toast.makeText(getActivity(), "je passe par là" , Toast.LENGTH_SHORT).show();
                 verifMess = mess;
@@ -363,7 +372,7 @@ public class BluetoothChatFragment extends Fragment {
             // si le joueur ne joue pas
             ret = "E:0";
         }
-
+        System.out.println("Ret " + ret);
         return ret;
     }
 
