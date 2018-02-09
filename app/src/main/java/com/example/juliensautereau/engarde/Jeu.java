@@ -442,7 +442,7 @@ public class Jeu extends SampleActivityBase {
 
     /* --------------------------------- Deb actionButton ------------------------------------- */
 
-    public void actionButtonParrer(View v){
+    public void actionButtonParer(View v){
         if(parade(getCarteSelectioner())){
             String msg = "PA:";
             messages.add(msg);
@@ -728,7 +728,7 @@ public class Jeu extends SampleActivityBase {
         //setContentView(R.layout.activity_game);
         // setContentView(new CustomView(this));
 
-        /*fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
+        fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
 
         // Init
 
@@ -752,7 +752,7 @@ public class Jeu extends SampleActivityBase {
 
         // Start
 
-        startGame();*/
+        startGame();
     }
 
 }
