@@ -166,8 +166,7 @@ public class DeviceListActivity extends Activity {
     /**
      * The on-click listener for all devices in the ListViews
      */
-    private AdapterView.OnItemClickListener mDeviceClickListener
-            = new AdapterView.OnItemClickListener() {
+    private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             // Cancel discovery because it's costly and we're about to connect
             mBtAdapter.cancelDiscovery();
@@ -183,7 +182,7 @@ public class DeviceListActivity extends Activity {
             // Set result and finish this Activity
             setResult(Activity.RESULT_OK, intent);
 
-            serveur = true;
+
             finish();
         }
     };

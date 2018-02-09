@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -32,19 +33,25 @@ public class MainActivity extends SampleActivityBase {
     // Whether the Log Fragment is currently shown
     private boolean mLogShown;
 
+    public static Button bJouer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        System.out.println("----------------------------- A"  );
+
+        bJouer = findViewById(R.id.Bjouer);
+        System.out.print(bJouer);
+
+        //if(DeviceListActivity.serveur == false){
+            bJouer.setEnabled(false);
+        //}
+
         if(savedInstanceState == null) {
-            System.out.println("----------------------------- B"  );
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             BluetoothChatFragment fragment = new BluetoothChatFragment();
             transaction.replace(R.id.sample_content_fragment, fragment);
-            System.out.println("----------------------------- C"  );
             transaction.commit();
-            System.out.println("----------------------------- D"  );
         }
     }
 
@@ -55,17 +62,13 @@ public class MainActivity extends SampleActivityBase {
     }
 
     public void exitApp(View v) {
-
         this.finish();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        System.out.println("----------------------------- E"  );
 
         getMenuInflater().inflate(R.menu.main, menu);
-        System.out.println("----------------------------- F"  );
-
         return true;
     }
 

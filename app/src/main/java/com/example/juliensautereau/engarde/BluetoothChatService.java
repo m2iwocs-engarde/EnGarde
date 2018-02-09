@@ -128,6 +128,7 @@ public class BluetoothChatService {
             mInsecureAcceptThread = new AcceptThread(false);
             mInsecureAcceptThread.start();
         }
+
         // Update UI title
         updateUserInterfaceTitle();
     }
@@ -158,6 +159,7 @@ public class BluetoothChatService {
         // Start the thread to connect with the given device
         mConnectThread = new ConnectThread(device, secure);
         mConnectThread.start();
+
         // Update UI title
         updateUserInterfaceTitle();
     }
@@ -204,6 +206,7 @@ public class BluetoothChatService {
         bundle.putString(Constants.DEVICE_NAME, device.getName());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
+
         // Update UI title
         updateUserInterfaceTitle();
     }
@@ -251,6 +254,8 @@ public class BluetoothChatService {
         synchronized (this) {
             if (mState != STATE_CONNECTED) return;
             r = mConnectedThread;
+
+
         }
         // Perform the write unsynchronized
         r.write(out);
@@ -288,10 +293,12 @@ public class BluetoothChatService {
 
         mState = STATE_NONE;
         // Update UI title
-        updateUserInterfaceTitle();
+        //updateUserInterfaceTitle();
 
         // Start the service over to restart listening mode
+        MainActivity.bJouer.setEnabled(false);
         BluetoothChatService.this.start();
+
     }
 
     /**
