@@ -1,6 +1,7 @@
 package com.example.juliensautereau.engarde;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -727,10 +728,17 @@ public class Jeu extends SampleActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
+        if(savedInstanceState == null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            fragment = new BluetoothChatFragment();
+            serveur = DeviceListActivity.serveur;
+            System.out.println("serveur " + serveur);
+        }
 
-        serveur = DeviceListActivity.serveur;
-        System.out.println("serveur " + serveur);
+        //fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
+
+//        serveur = DeviceListActivity.serveur;
+  //      System.out.println("serveur " + serveur);
                 // Init
 
         //TODO a finir
@@ -753,7 +761,7 @@ public class Jeu extends SampleActivityBase {
 
         // Start
 
-        startGame();
+    //    startGame();
     }
 
     public void onPause(){
