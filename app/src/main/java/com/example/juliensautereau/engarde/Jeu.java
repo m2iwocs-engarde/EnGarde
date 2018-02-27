@@ -71,6 +71,7 @@ public class Jeu extends SampleActivityBase {
         }else{
             //j2
             String brut = receiveData();
+            System.out.println("-------------------------------------- " + brut); //TODO DEBUG
             test(parse(brut));
 
             sendData("OK:");
@@ -814,7 +815,7 @@ public class Jeu extends SampleActivityBase {
 
         }
 
-        serveur = DeviceListActivity.serveur;
+        serveur = DeviceListActivity.serveur2;
         System.out.println("serveur " + serveur);
 
         // Init

@@ -213,6 +213,7 @@ public class BluetoothChatFragment extends Fragment {
     public void sendMessage(String message) {
         // on vérifie si on est encore connecté
 
+        //TODO TOUJOURS UN BUG LA !!!!!!!!!!!!!!!!!!!!!!
         System.out.println("mChatService " + mChatService.getState() + " , BluetoothChatService.STATE_CONNECTED " + BluetoothChatService.STATE_CONNECTED); //TODO DEBUG
         if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
             //Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
@@ -322,7 +323,7 @@ public class BluetoothChatFragment extends Fragment {
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
                     mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
-                    DeviceListActivity.serveur = true;
+                    //DeviceListActivity.serveur = true; //TODO Coco a suppr
                     MainActivity.bJouer.setEnabled(true);
                     if (null != activity) {
                         Toast.makeText(activity, "Connected to "
@@ -360,7 +361,8 @@ public class BluetoothChatFragment extends Fragment {
             //System.out.println("B  " + verifMess);
 
             if(!mess.equals(verifMess)){
-                //Toast.makeText(getActivity(), "je passe par là" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "je passe par là" , Toast.LENGTH_SHORT).show(); //TODO DEBUG
+                System.out.println("Hello");
                 verifMess = mess;
                 ret = mess;
                 break;

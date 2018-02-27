@@ -64,7 +64,7 @@ public class DeviceListActivity extends Activity {
      */
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
 
-    public static boolean serveur = false;
+    public static boolean serveur2 = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +174,9 @@ public class DeviceListActivity extends Activity {
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
             String address = info.substring(info.length() - 17);
+
+            serveur2 = true;
+            System.out.println("PING");
 
             // Create the result Intent and include the MAC address
             Intent intent = new Intent();
