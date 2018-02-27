@@ -22,10 +22,9 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/epee"
-        android:scaleType="centerCrop"
         android:layout_gravity="center"
-        />
+        android:scaleType="centerCrop"
+        android:src="@drawable/epee" />
 
     <Button android:id="@+id/Bjouer"
         android:layout_width="match_parent"
@@ -36,7 +35,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/boutonQuitter"
-        android:onClick="exitApp"/>
+        android:onClick="exitApp"
+        android:text="@string/boutonQuitter" />
 
 </LinearLayout>
