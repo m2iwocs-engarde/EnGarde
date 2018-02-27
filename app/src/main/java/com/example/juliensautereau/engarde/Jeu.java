@@ -2,7 +2,6 @@ package com.example.juliensautereau.engarde;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,32 +14,31 @@ import java.util.ArrayList;
 //TODO : bouton fin du tour
 
 public class Jeu extends SampleActivityBase {
-    ArrayList<Integer> pioche = new ArrayList<Integer>();
+    ArrayList<Integer> pioche = new ArrayList<>();
     Integer defausseLast = 0;
     Integer taillePioche = 0;
     Joueur j1;
     Joueur j2;
     Joueur actif;
     Joueur inactif;
-    ArrayList<String> messages = new ArrayList<String>();
+    ArrayList<String> messages = new ArrayList<>();
 
-    boolean game = true;
     boolean breakInactif = false;
 
     boolean attaquer = false;
     boolean attaquerIndirect = false;
 
-    ArrayList<Integer> attCartes = new ArrayList<Integer>();
+    ArrayList<Integer> attCartes = new ArrayList<>();
 
     boolean serveur;
 
-    //
+    ////
 
     ToggleButton c1,c2,c3,c4,c5;
 
     Button btn_avancer,btn_reculer,btn_attaqueD,btn_attaqueI,btn_parer,btn_retraite;
 
-    Button btn_pioche, btn_defausse;
+    Button btn_pioche, btn_defausse, btn_finTour;
 
     /*-----------------Time Line -------------------------------------------------------*/
     public void startGame(){
@@ -153,10 +151,10 @@ public class Jeu extends SampleActivityBase {
             contenu = original[1].split(";");
         }
 
-        ArrayList<String> messageArray = new ArrayList<String>();
+        ArrayList<String> messageArray = new ArrayList<>();
 
         messageArray.add(original[0]);
-        for(int i=0; i <contenu.length;i++){
+        for(int i=0; i < contenu.length;i++){
             messageArray.add(contenu[i]);
         }
 
@@ -351,12 +349,12 @@ public class Jeu extends SampleActivityBase {
         btn_avancer.setEnabled(false);
         btn_reculer.setEnabled(false);
 
+        btn_finTour.setEnabled(true);
+
         if(a){
             //Dégriser bouton attaquer indirectement
             btn_attaqueI.setEnabled(true);
         }
-
-        //TODO Dégriser Fin du tour
     }
 
     public void finTour(){
@@ -365,11 +363,10 @@ public class Jeu extends SampleActivityBase {
         btn_avancer.setEnabled(false);
         btn_reculer.setEnabled(false);
         btn_attaqueI.setEnabled(false);
-        //TODO Griser Fin du tour
 
-        String[] msg = null;
+        btn_finTour.setEnabled(true);
 
-        for(String s : msg) {
+        for(String s : messages) {
             sendData(s);
             String brut = receiveData();
             test(parse(brut));
@@ -459,6 +456,10 @@ public class Jeu extends SampleActivityBase {
 
     /* --------------------------------- Deb actionButton ------------------------------------- */
 
+    public void actionButtonfinTour(View v){
+        finTour();
+    }
+
     public void actionButtonParer(View v){
         if(parade(getCarteSelectioner())){
             String msg = "PA:";
@@ -503,7 +504,6 @@ public class Jeu extends SampleActivityBase {
         }else{
             //Erreur msg: attaque imposible
             Toast.makeText(this,"L'attaque indirect a échoué",Toast.LENGTH_SHORT).show();
-            return;
         }
     }
 
@@ -528,7 +528,6 @@ public class Jeu extends SampleActivityBase {
         }else{
             //Erreur msg : Déplacement imposible
             Toast.makeText(this,"Reculer est impossible",Toast.LENGTH_SHORT).show();
-            return ;
         }
     }
 
@@ -549,11 +548,9 @@ public class Jeu extends SampleActivityBase {
             messages.add(msg);
 
             finTour();
-            //Fin du tour
         }else{
             //Erreur msg : Déplacement imposible
             Toast.makeText(this,"Avancer est impossible",Toast.LENGTH_SHORT).show();
-            return ;
         }
     }
 
@@ -580,7 +577,35 @@ public class Jeu extends SampleActivityBase {
     public ArrayList<Integer> getCarteSelectioner(){
         ArrayList<Integer> ret = new ArrayList<Integer>();
 
-        //TODO Récupéré les toogle buttons (numeros de cartes)
+        if(c1.isChecked()){
+            String tmp = c1.getText().toString();
+            ret.add(Integer.parseInt(tmp));
+        }
+
+        if(c2.isChecked()){
+            String tmp = c2.getText().toString();
+            ret.add(Integer.parseInt(tmp));
+        }
+
+        if(c2.isChecked()){
+            String tmp = c2.getText().toString();
+            ret.add(Integer.parseInt(tmp));
+        }
+
+        if(c3.isChecked()){
+            String tmp = c3.getText().toString();
+            ret.add(Integer.parseInt(tmp));
+        }
+
+        if(c4.isChecked()){
+            String tmp = c4.getText().toString();
+            ret.add(Integer.parseInt(tmp));
+        }
+
+        if(c5.isChecked()){
+            String tmp = c5.getText().toString();
+            ret.add(Integer.parseInt(tmp));
+        }
 
         return ret;
     }
@@ -749,6 +774,7 @@ public class Jeu extends SampleActivityBase {
             return true;
         }else{
             //defaite du joueur
+
             return false;
         }
     }
@@ -779,23 +805,19 @@ public class Jeu extends SampleActivityBase {
         setContentView(R.layout.activity_game);
 
         if(savedInstanceState == null) {
-            System.out.println("--------------------------------------------------------------------RAERZERTZRZTERTERT ");
+            //System.out.println("--------------------------------------------------------------------RAERZERTZRZTERTERT "); //TODO DEBUG
             //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             //fragment = new BluetoothChatFragment();
 
             FragmentTransaction transaction = MainActivity.transaction;
             fragment = MainActivity.fragment;
 
-            serveur = DeviceListActivity.serveur;
-            System.out.println("serveur " + serveur);
-
         }
-
-       //// fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
 
         serveur = DeviceListActivity.serveur;
         System.out.println("serveur " + serveur);
-                // Init
+
+        // Init
 
         //TODO a finir
         c1 = findViewById(R.id.carte1);
@@ -816,6 +838,8 @@ public class Jeu extends SampleActivityBase {
         //TODO a finir
         btn_defausse = findViewById(R.id.defausse);
         btn_pioche = findViewById(R.id.pioche);
+
+        btn_finTour = findViewById(R.id.finTour);
 
         // Start
 
