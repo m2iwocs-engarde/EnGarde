@@ -729,16 +729,22 @@ public class Jeu extends SampleActivityBase {
         setContentView(R.layout.activity_game);
 
         if(savedInstanceState == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            fragment = new BluetoothChatFragment();
+            System.out.println("--------------------------------------------------------------------RAERZERTZRZTERTERT ");
+            //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            //fragment = new BluetoothChatFragment();
+
+            FragmentTransaction transaction = MainActivity.transaction;
+            fragment = MainActivity.fragment;
+
             serveur = DeviceListActivity.serveur;
             System.out.println("serveur " + serveur);
+
         }
 
-        //fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
+       //// fragment = new BluetoothChatFragment();//INTITALISATION FACTIF
 
-//        serveur = DeviceListActivity.serveur;
-  //      System.out.println("serveur " + serveur);
+        serveur = DeviceListActivity.serveur;
+        System.out.println("serveur " + serveur);
                 // Init
 
         //TODO a finir
@@ -761,7 +767,7 @@ public class Jeu extends SampleActivityBase {
 
         // Start
 
-    //    startGame();
+        startGame();
     }
 
     public void onPause(){
