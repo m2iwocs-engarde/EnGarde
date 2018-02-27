@@ -32,7 +32,7 @@ public class Jeu extends SampleActivityBase {
 
     ArrayList<Integer> attCartes = new ArrayList<Integer>();
 
-    boolean serveur; //TODO
+    boolean serveur;
 
     //
 
@@ -183,6 +183,7 @@ public class Jeu extends SampleActivityBase {
                     String brut = receiveData(); //TODO Verif Syncro
 
                 break;
+
             case "PR" : // J2 recoit ses cartes
                     int nbCarte = 0;
                     for(int i=1; i<msg.size();i++) {
@@ -197,14 +198,18 @@ public class Jeu extends SampleActivityBase {
                     //TODO
                     sendData("OK:"); //TODO Verif Syncro
                 break;
+
             case "PN" : // Mise a jour de la taille de la pioche
                     this.taillePioche = Integer.parseInt(msg.get(1));
                 break;
+
             case "OK" :
                 break;
+
             case "J1" :
                     j1 = new Joueur(Boolean.parseBoolean(msg.get(1)),Boolean.parseBoolean(msg.get(2)));
                 break;
+
             case "J2" :
                     ArrayList<Integer> cartes = new ArrayList<Integer>();
 
@@ -214,10 +219,12 @@ public class Jeu extends SampleActivityBase {
 
                     j2 = new Joueur(Boolean.parseBoolean(msg.get(1)),Boolean.parseBoolean(msg.get(2)),cartes);
                 break;
+
             case "T":
                     if(serveur && Integer.parseInt(msg.get(0)) == 1) this.breakInactif = true;
                     if(!serveur && Integer.parseInt(msg.get(0)) == 2) this.breakInactif = true;
                 break;
+
             case "AD":
                     this.attaquer = true;
                     this.attCartes.clear();
@@ -226,6 +233,7 @@ public class Jeu extends SampleActivityBase {
                         this.attCartes.add(Integer.parseInt(msg.get(i)));
                     }
                 break;
+
             case "AI":
                     this.attaquerIndirect = true;
                     this.attCartes.clear();
@@ -233,6 +241,14 @@ public class Jeu extends SampleActivityBase {
                     for(int i=0; i<msg.size(); i++){
                         this.attCartes.add(Integer.parseInt(msg.get(i)));
                     }
+                break;
+
+            case "PERDU":
+                    perdu();
+                break;
+
+            case "GAGNE":
+                    gagne();
                 break;
         }
     }
@@ -272,7 +288,7 @@ public class Jeu extends SampleActivityBase {
             }
 
             if(!reculer && !parrade){//le joueur ne peut rien faire il a perdu
-                //Perdu
+                perduSend();
             }
         }
 
@@ -286,14 +302,13 @@ public class Jeu extends SampleActivityBase {
             if(parrade) {
                 btn_parer.setEnabled(true);
             }else{ //le joueur ne peut pas parer il a perdu
-                //Perdu
+                perduSend();
             }
         }
 
         if(!attaquer && !attaquerIndirect){
             tourAttaque();
         }
-
 
     }
 
@@ -323,8 +338,8 @@ public class Jeu extends SampleActivityBase {
             btn_reculer.setEnabled(true);
         }
 
-        if(!attaquer && !avancer && !reculer){//si aucune action possible, le joeuur a perdu
-            //Perdu
+        if(!attaquer && !avancer && !reculer){//si aucune action possible, le joeur a perdu
+            perduSend();
         }
     }
 
@@ -542,6 +557,23 @@ public class Jeu extends SampleActivityBase {
     }
 
     /* -------------- Fin actionButton ---------------------------------------------------------- */
+    public void perduSend(){
+        sendData("PERDU:");
+        perdu();
+    }
+
+    public void perdu(){
+        Toast.makeText(this,"Vous avez perdu",Toast.LENGTH_SHORT).show();
+    }
+
+    public void gagneSend(){
+        sendData("GAGNE:");
+        gagne();
+    }
+
+    public void gagne(){
+        Toast.makeText(this,"Vous avez gagne",Toast.LENGTH_SHORT).show();
+    }
 
     /*---------------  Fonctions ---------------------------------------------------------------- */
     public ArrayList<Integer> getCarteSelectioner(){
@@ -551,8 +583,6 @@ public class Jeu extends SampleActivityBase {
 
         return ret;
     }
-
-
 
     public void initialisation(){
         initPioche();
