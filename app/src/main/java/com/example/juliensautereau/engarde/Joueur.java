@@ -82,6 +82,10 @@ public class Joueur {
 
     public void invStatut() { this.statut = !this.statut; }
 
+    public int getCartes(int index) {
+        return cartes.get(index);
+    }
+
     @Override
     public String toString(){
         String ret = this.statut + ";" + this.sens;
@@ -91,4 +95,5 @@ public class Joueur {
         }
         return ret;
     }
+
 }

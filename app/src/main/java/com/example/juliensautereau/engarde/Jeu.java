@@ -191,6 +191,7 @@ public class Jeu extends SampleActivityBase {
                         j2.addCartes(Integer.parseInt(msg.get(i)));
                     }
                     this.taillePioche = this.taillePioche - nbCarte;
+                    majCard();
                     sendData("OK:"); //TODO Verif Syncro
                 break;
 
@@ -610,6 +611,8 @@ public class Jeu extends SampleActivityBase {
 
         j2 = new Joueur(false,false);
         pioche(j2);
+
+        majCard();
     }
 
     public Boolean avancer(Integer carte){
@@ -681,7 +684,24 @@ public class Jeu extends SampleActivityBase {
         return true;
     }
 
+    public void majCard(){
 
+        Joueur moi;
+        if(serveur) {
+            moi = j1;
+            System.out.println("------------------------j1 " + j1.toString() + " " + moi.toString());
+        }else{
+            moi = j2;
+            System.out.println("-----------------------j2 " + j2.toString() + " " + moi.toString());
+        }
+
+        c1.setText(moi.getCartes(0) + "");
+        c2.setText(moi.getCartes(1) + "");
+        c3.setText(moi.getCartes(2) + "");
+        c4.setText(moi.getCartes(3) + "");
+        c5.setText(moi.getCartes(4) + "");
+
+    }
 
     public ArrayList<Integer> pioche(Joueur j){
 
@@ -783,6 +803,8 @@ public class Jeu extends SampleActivityBase {
         c3 = findViewById(R.id.carte3);
         c4 = findViewById(R.id.carte4);
         c5 = findViewById(R.id.carte5);
+
+
 
         btn_avancer = findViewById(R.id.avancer);
         btn_reculer = findViewById(R.id.reculer);
